@@ -1,26 +1,26 @@
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    define: {
-        global: {},
+  define: {
+    global: {},
+  },
+  resolve: {},
+  plugins: [react()],
+  optimizeDeps: {
+    include: ['@mui/material/Tooltip', '@emotion/styled'],
+  },
+  server: {
+    watch: {
+      usePolling: true,
     },
-    resolve: {},
-    plugins: [react()],
-    optimizeDeps: {
-        include: ['@mui/material/Tooltip', '@emotion/styled'],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
     },
-    server: {
-        watch: {
-            usePolling: true,
-        },
-        proxy: {
-            '/api': {
-                target: 'http://localhost',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, ''),
-            },
-        },
-    },
+  },
 });
