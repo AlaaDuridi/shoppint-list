@@ -1,5 +1,15 @@
 import React from 'react';
-import { Grid, Link, AppBar, InputBase, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+  Grid,
+  Link,
+  AppBar,
+  useTheme,
+  InputBase,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import {
   ModeNightRounded,
   WbSunnyRounded,
@@ -11,11 +21,13 @@ import { useCustomTheme } from '../../contexts/CustomThemeContext.tsx';
 
 const DrawerHeader: React.FC = () => {
   const { mode, toggleTheme } = useCustomTheme();
-
+  const theme = useTheme();
+  console.log('mode:', mode);
+  console.log('Theme palette:', theme.palette.primary.main);
   return (
     <AppBar
       position='static'
-      sx={{ backgroundColor: 'theme.palette.primary.main', padding: '0.5rem' }}
+      sx={{ backgroundColor: theme.palette.primary.main, padding: '0.5rem' }}
     >
       <Toolbar>
         <Typography variant='h6' sx={{ flexGrow: 1 }}>
@@ -66,8 +78,9 @@ const DrawerHeader: React.FC = () => {
 };
 
 const Footer: React.FC = () => {
+  const theme = useTheme();
   return (
-    <Box sx={{ backgroundColor: 'primary.main', color: 'white', padding: 3 }}>
+    <Box sx={{ backgroundColor: theme.palette.primary.main, color: 'white', padding: 3 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant='subtitle1'>Policy</Typography>

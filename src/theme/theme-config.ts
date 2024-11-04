@@ -91,21 +91,21 @@ export const getThemeOptions = (mode: PaletteMode) => {
     palette: {
       mode,
       primary: {
-        light: brand[200],
+        light: brand[300],
         main: brand[400],
-        dark: brand[700],
+        dark: brand[500],
         contrastText: brand[50],
         ...(mode === 'dark' && {
           contrastText: brand[50],
-          light: brand[300],
-          main: brand[400],
-          dark: brand[700],
+          light: brand[700],
+          main: brand[800],
+          dark: brand[900],
         }),
       },
       info: {
-        light: brand[100],
-        main: brand[300],
-        dark: brand[600],
+        light: brand[200],
+        main: brand[500],
+        dark: brand[900],
         contrastText: gray[50],
         ...(mode === 'dark' && {
           contrastText: brand[300],
