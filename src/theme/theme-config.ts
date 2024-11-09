@@ -79,6 +79,34 @@ const red = {
   800: 'hsl(0, 95%, 12%)',
   900: 'hsl(0, 93%, 6%)',
 };
+
+const pink = {
+  50: 'hsl(318, 100%, 97%)',
+  100: 'hsl(318, 71%, 94%)',
+  200: 'hsl(318, 74%, 80%)',
+  300: 'hsl(318, 85%, 75%)',
+  400: 'hsl(318, 70%, 73%)',
+  500: 'hsl(318, 70%, 60%)',
+  600: 'hsl(318, 71%, 40%)',
+  700: 'hsl(318, 74%, 30%)',
+  800: 'hsl(318, 75%, 20%)',
+  900: 'hsl(318, 73%, 10%)',
+  1000: 'hsl(291, 64%, 42%)',
+};
+
+const mauve = {
+  50: 'hsl(291, 47%, 97%)',
+  100: 'hsl(291, 47%, 94%)',
+  200: 'hsl(291, 47%, 80%)',
+  300: 'hsl(291, 47%, 75%)',
+  400: 'hsl(291, 47%, 71%)',
+  500: 'hsl(291, 47%, 58%)',
+  600: 'hsl(291, 47%, 45%)',
+  700: 'hsl(291, 47%, 35%)',
+  800: 'hsl(291, 47%, 25%)',
+  900: 'hsl(291, 47%, 15%)',
+};
+
 const defaultShadows = createTheme().shadows;
 const customShadows: Shadows = [...defaultShadows];
 // Theme configuration with light and dark mode support
@@ -92,7 +120,7 @@ export const getThemeOptions = (mode: PaletteMode) => {
       mode,
       primary: {
         light: brand[300],
-        main: brand[400],
+        main: pink[1000],
         dark: brand[500],
         contrastText: brand[50],
         ...(mode === 'dark' && {
@@ -102,6 +130,19 @@ export const getThemeOptions = (mode: PaletteMode) => {
           dark: brand[900],
         }),
       },
+      secondary: {
+        light: orange[300],
+        main: orange[400],
+        dark: orange[900],
+        contrastText: gray[50],
+        ...(mode === 'dark' && {
+          contrastText: brand[300],
+          light: mauve[300],
+          main: mauve[400],
+          dark: pink[800],
+        }),
+      },
+
       info: {
         light: brand[200],
         main: brand[500],
@@ -149,11 +190,14 @@ export const getThemeOptions = (mode: PaletteMode) => {
       },
       divider: mode === 'dark' ? alpha(gray[700], 0.6) : alpha(gray[300], 0.4),
       background: {
-        default: mode === 'dark' ? gray[900] : 'hsl(0, 0%, 99%)',
+        default:
+          mode === 'dark'
+            ? 'linear-gradient(320deg, rgba(255, 200, 215, 1), rgba(67, 83, 122, 1) 87%)'
+            : 'linear-gradient(to right, hsl(291, 47%, 71%), #ffefba)',
         paper: mode === 'dark' ? 'hsl(220, 30%, 7%)' : 'hsl(220, 35%, 97%)',
       },
       text: {
-        primary: mode === 'dark' ? 'hsl(0, 0%, 100%)' : gray[800],
+        primary: mode === 'dark' ? pink[400] : pink[50],
         secondary: mode === 'dark' ? gray[400] : gray[600],
         warning: orange[400],
       },

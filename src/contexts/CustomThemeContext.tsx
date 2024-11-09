@@ -17,7 +17,7 @@ export const useCustomTheme = () => useContext(CustomThemeContext);
 export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
     const savedMode = localStorage.getItem('themeMode') as PaletteMode;
-    return savedMode || 'light';
+    return savedMode || 'dark';
   });
   const toggleTheme = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
