@@ -24,6 +24,8 @@ interface IAppBar {
   setIsCartOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+import logo from '/store-logo.png';
+
 const AppBar: FC<IAppBar> = ({ setIsDrawerOpen, setIsCartOpen }) => {
   const { mode, toggleTheme } = useCustomTheme();
   const theme = useTheme();
@@ -43,7 +45,7 @@ const AppBar: FC<IAppBar> = ({ setIsDrawerOpen, setIsCartOpen }) => {
 
         {/* Header part one: Header Logo  */}
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'center' }}>
-          <Typography variant='h6'>Logo</Typography>
+          <Box component={'img'} sx={{ height: '30px' }} src={logo} />
         </Box>
 
         {/*Header part two: Header nav */}
@@ -55,7 +57,7 @@ const AppBar: FC<IAppBar> = ({ setIsDrawerOpen, setIsCartOpen }) => {
             justifyContent: 'center',
           }}
         >
-          <Typography variant='h6'>Your Logo</Typography>
+          <Box component={'img'} sx={{ height: '30px' }} src={logo} />
           <Grid container gap={2} ml={theme.spacing(1)}>
             <Grid item>
               <Typography>Home</Typography>

@@ -11,7 +11,7 @@ const Footer: FC = () => {
       justifyContent='space-around'
     >
       <Grid item md={4}>
-        <Typography variant='body1'>© 2024, Your Shop Name</Typography>
+        <Typography variant='body1'>© 2024, &STORE</Typography>
       </Grid>
       <Grid container md={4} item gap={2}>
         Follow us:
