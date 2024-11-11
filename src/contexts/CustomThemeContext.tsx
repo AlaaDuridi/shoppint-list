@@ -3,12 +3,12 @@ import { ThemeProvider, createTheme, PaletteMode } from '@mui/material';
 import { getThemeOptions } from '../theme';
 
 interface CustomThemeContextProps {
-  mode: 'light' | 'dark';
+  mode: PaletteMode;
   toggleTheme: () => void;
 }
 
 const CustomThemeContext = createContext<CustomThemeContextProps>({
-  mode: 'light',
+  mode: 'dark',
   toggleTheme: () => {},
 });
 

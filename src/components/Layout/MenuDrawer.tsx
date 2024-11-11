@@ -28,8 +28,9 @@ const MenuDrawer: FC<IMenuDrawerProps> = ({ isDrawerOpen, setIsDrawerOpen }) => 
         onClose={() => setIsDrawerOpen(false)}
         sx={{
           '& .MuiDrawer-paper': {
+            display: 'flex',
             width: 250,
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.dark,
             color: theme.palette.common.white,
             padding: theme.spacing(2),
           },
@@ -44,44 +45,15 @@ const MenuDrawer: FC<IMenuDrawerProps> = ({ isDrawerOpen, setIsDrawerOpen }) => 
         <Divider sx={{ backgroundColor: 'white', my: 2 }} />
         <List>
           <ListItem>
-            <ListItemText primary='Artist' />
+            <ListItemText primary='Home' />
           </ListItem>
           <ListItem>
-            <ListItemText
-              primary={
-                <>
-                  2025 Season's Greetings
-                  <Box
-                    component='span'
-                    sx={{
-                      backgroundColor: 'red',
-                      color: 'white',
-                      padding: '0 4px',
-                      marginLeft: '8px',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    New
-                  </Box>
-                </>
-              }
-            />
+            <ListItemText primary='Account' />
           </ListItem>
           <ListItem>
-            <ListItemText primary='Official Products' />
+            <ListItemText primary='About' />
           </ListItem>
         </List>
-        <Divider sx={{ backgroundColor: 'white', my: 2 }} />
-        <Box>
-          <Typography variant='subtitle2'>Account</Typography>
-          <Typography variant='caption'>
-            For orders with both in-stock and pre-order items, the shipment will be processed once
-            all items are available.
-          </Typography>
-          <Typography variant='body2' mt={1}>
-            Jordan (USD $)
-          </Typography>
-        </Box>
       </Drawer>
     </>
   );

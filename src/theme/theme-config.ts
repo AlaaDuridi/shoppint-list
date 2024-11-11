@@ -119,9 +119,9 @@ export const getThemeOptions = (mode: PaletteMode) => {
     palette: {
       mode,
       primary: {
-        light: brand[300],
-        main: pink[1000],
-        dark: brand[500],
+        light: mauve[300],
+        main: mauve[600],
+        dark: mauve[700],
         contrastText: brand[50],
         ...(mode === 'dark' && {
           contrastText: brand[50],
@@ -276,15 +276,6 @@ export const getThemeOptions = (mode: PaletteMode) => {
           },
         },
       },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: '24px',
-            paddingBlock: '.9rem',
-            paddingInline: '1.5rem',
-          },
-        },
-      },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
@@ -296,6 +287,21 @@ export const getThemeOptions = (mode: PaletteMode) => {
         styleOverrides: {
           body: {
             backgroundColor: mode === 'dark' ? '#121212' : '#ffffff',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: '24px',
+            paddingBlock: '.9rem',
+            paddingInline: '1.5rem',
+            '&:hover': {
+              backgroundColor: mode === 'dark' ? alpha(orange[500], 0.2) : alpha(orange[300], 0.2),
+            },
+            '&:focus': {
+              outline: `2px solid ${mode === 'dark' ? brand[500] : brand[700]}`,
+            },
           },
         },
       },
