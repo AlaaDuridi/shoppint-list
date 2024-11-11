@@ -1,21 +1,8 @@
 import { createContext, useContext, FC, ReactNode, useReducer, Dispatch } from 'react';
-
-interface ICartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { ACTION_TYPES, ICartItem } from '../types/models/cart.model.ts';
 
 interface ICartState {
   items: ICartItem[];
-}
-
-enum ACTION_TYPES {
-  ADD_ITEM = 'ADD_ITEM',
-  REMOVE_ITEM = 'REMOVE_ITEM',
-  CLEAR_CART = 'CLEAR_CART',
 }
 
 type CartAction =
@@ -29,7 +16,7 @@ type CartAction =
     }
   | { type: ACTION_TYPES.CLEAR_CART };
 
-const initialState: ICartState = { items: [] };
+const INITIAL_STATE: ICartState = { items: [] };
 
 const cartReducer = (state: ICartState, action: CartAction) => {
   switch (action.type) {
@@ -61,7 +48,7 @@ interface ICartContextType {
 }
 
 const CartContext = createContext<ICartContextType>({
-  state: initialState,
+  state: INITIAL_STATE,
   dispatch: () => null,
 });
 
@@ -78,7 +65,7 @@ interface ICartContextProviderProps {
 }
 
 export const CartContextProvider: FC<ICartContextProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
   const value: ICartContextType = {
     state: state,

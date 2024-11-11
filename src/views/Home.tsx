@@ -1,7 +1,9 @@
+import ProductGrid from '../components/Product/ProductGrid.tsx';
+
 const Home = () => {
   return (
     <>
-      <>Home</>
+      <ProductGrid />
     </>
   );
 };
