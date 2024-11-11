@@ -22,8 +22,15 @@ const ProductGrid: FC = () => {
             <Card>
               <CardMedia component='img' height='140' image={product.image} alt={product.name} />
               <CardContent>
-                <Typography variant='h6'>{product.name}</Typography>
-                <Typography variant='body2'>${product.price}</Typography>
+                <Typography color='secondary' variant='h6'>
+                  {product.name}
+                </Typography>
+                <Typography color='gray' variant='subtitle2'>
+                  {product.description}
+                </Typography>
+                <Typography color='secondary' variant='body2'>
+                  {product.price} {product.currency}
+                </Typography>
                 <Button
                   variant='contained'
                   onClick={() => addToCart(product)}

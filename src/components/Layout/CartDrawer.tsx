@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, useState, SetStateAction } from 'react';
 import {
   Box,
   Button,
@@ -9,10 +9,12 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  useTheme,
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useCart } from '../../contexts/CartContext.tsx';
 import { ACTION_TYPES } from '../../types/models/cart.model.ts';
+import CheckoutForm from '../Checkout/CheckoutForm.tsx';
 
 interface ICartDrawerProps {
   isCartOpen: boolean;
@@ -21,15 +23,37 @@ interface ICartDrawerProps {
 
 const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
   const { state, dispatch } = useCart();
+  const [showCheckout, setShowCheckout] = useState<boolean>(false);
+  const theme = useTheme();
 
   const removeItem = (id: string) => {
     dispatch({ type: ACTION_TYPES.REMOVE_ITEM, id });
   };
 
   const total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  const handleCheckout = () => {
+    setShowCheckout(true);
+  };
+  const handleOrderSubmission = (details: { name: string; email: string }) => {
+    alert(`Order placed by ${details.name} (${details.email}) for $${total.toFixed(2)}`);
+    setShowCheckout(false);
+    dispatch({ type: ACTION_TYPES.CLEAR_CART });
+  };
   return (
-    <Drawer anchor='right' open={isCartOpen} onClose={() => setIsCartOpen(false)}>
+    <Drawer
+      anchor='right'
+      open={isCartOpen}
+      onClose={() => setIsCartOpen(false)}
+      sx={{
+        '& .MuiDrawer-paper': {
+          display: 'flex',
+          width: 250,
+          backgroundColor: theme.palette.primary.dark,
+          color: theme.palette.common.white,
+          padding: theme.spacing(2),
+        },
+      }}
+    >
       <Box display='flex' justifyContent='space-between' alignItems='center' p={2}>
         <Typography variant='h6'>Your Cart</Typography>
         <IconButton onClick={() => setIsCartOpen(false)}>
@@ -37,7 +61,9 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
         </IconButton>
       </Box>
       <Divider />
-      {state.items.length > 0 ? (
+      {showCheckout ? (
+        <CheckoutForm onSubmit={handleOrderSubmission} />
+      ) : state.items.length > 0 ? (
         <>
           <List>
             {state.items.map((item) => (
@@ -54,9 +80,9 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
           </List>
           <Divider />
           <Box p={2}>
-            <Typography variant='h6'>Total: ${total}</Typography>
-            <Button variant='contained' fullWidth onClick={() => alert('Proceed to Checkout')}>
-              Checkout
+            <Typography variant='h6'>Total: ${total.toFixed(2)}</Typography>
+            <Button variant='contained' fullWidth onClick={handleCheckout} sx={{ mt: 2 }}>
+              Proceed to Checkout
             </Button>
           </Box>
         </>
