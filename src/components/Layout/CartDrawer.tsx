@@ -42,7 +42,7 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
     dispatch({ type: ACTION_TYPES.DECREASE_QUANTITY, id });
   };
   const handleOrderSubmission = (details: { name: string; email: string }) => {
-    alert(`Order placed by ${details.name} (${details.email}) for $${total.toFixed(2)}`);
+    alert(`Order placed by ${details.name} (${details.email}) for ${total.toFixed(2)} AED`);
     setShowCheckout(false);
     dispatch({ type: ACTION_TYPES.CLEAR_CART });
   };
@@ -77,7 +77,7 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
               <ListItem key={item.id}>
                 <ListItemText
                   primary={`${item.name} x${item.quantity}`}
-                  secondary={`$${item.price * item.quantity}`}
+                  secondary={`${item.price * item.quantity} AED`}
                 />
 
                 <Box display='flex' alignItems='center'>
@@ -97,7 +97,7 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
           </List>
           <Divider />
           <Box p={2}>
-            <Typography variant='h6'>Total: ${total.toFixed(2)}</Typography>
+            <Typography variant='h6'>Total: {total.toFixed(2)} AED</Typography>
             <Button variant='contained' fullWidth onClick={handleCheckout} sx={{ mt: 2 }}>
               Proceed to Checkout
             </Button>
