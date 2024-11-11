@@ -1,4 +1,4 @@
-import { createContext, useContext, FC, ReactNode, useReducer, Dispatch } from 'react';
+import { createContext, Dispatch, FC, ReactNode, useContext, useReducer } from 'react';
 import { ACTION_TYPES, ICartItem } from '../types/models/cart.model.ts';
 
 interface ICartState {
@@ -14,28 +14,56 @@ type CartAction =
       type: ACTION_TYPES.REMOVE_ITEM;
       id: string;
     }
-  | { type: ACTION_TYPES.CLEAR_CART };
+  | { type: ACTION_TYPES.CLEAR_CART }
+  | {
+      type: ACTION_TYPES.INCREASE_QUANTITY;
+      id: string;
+    }
+  | {
+      type: ACTION_TYPES.DECREASE_QUANTITY;
+      id: string;
+    };
 
 const INITIAL_STATE: ICartState = { items: [] };
 
 const cartReducer = (state: ICartState, action: CartAction) => {
   switch (action.type) {
     case ACTION_TYPES.ADD_ITEM: {
-      const existingItemsIndex = state.items.findIndex((item) => item.id === action.item.id);
-      if (existingItemsIndex > -1) {
-        const updatedItems = [...state.items];
-        updatedItems[existingItemsIndex].quantity += action.item.quantity;
-        return { items: updatedItems };
+      const existingItem = state.items.find((item) => item.id === action.item.id);
+      if (existingItem) {
+        return {
+          ...state,
+          items: state.items.map((item) =>
+            item.id === action.item.id ? { ...item, quantity: item.quantity + 1 } : item,
+          ),
+        };
       }
-      return { items: [...state.items, action.item] };
+      return { ...state, items: [...state.items, { ...action.item, quantity: 1 }] };
     }
 
     case ACTION_TYPES.REMOVE_ITEM: {
-      return { items: state.items.filter((item: ICartItem) => item.id !== action.id) };
+      return { ...state, items: state.items.filter((item) => item.id !== action.id) };
     }
-
     case ACTION_TYPES.CLEAR_CART: {
       return { items: [] };
+    }
+    case ACTION_TYPES.INCREASE_QUANTITY: {
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.id ? { ...item, quantity: item.quantity + 1 } : item,
+        ),
+      };
+    }
+    case ACTION_TYPES.DECREASE_QUANTITY: {
+      return {
+        ...state,
+        items: state.items
+          .map((item) =>
+            item.id === action.id ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item,
+          )
+          .filter((item) => item.quantity),
+      };
     }
     default:
       return state;

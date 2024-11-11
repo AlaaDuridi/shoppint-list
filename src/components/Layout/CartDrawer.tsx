@@ -11,7 +11,7 @@ import {
   Divider,
   useTheme,
 } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, Delete, Remove, Add } from '@mui/icons-material';
 import { useCart } from '../../contexts/CartContext.tsx';
 import { ACTION_TYPES } from '../../types/models/cart.model.ts';
 import CheckoutForm from '../Checkout/CheckoutForm.tsx';
@@ -33,6 +33,13 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
   const total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const handleCheckout = () => {
     setShowCheckout(true);
+  };
+  const increaseQuantity = (id: string) => {
+    dispatch({ type: ACTION_TYPES.INCREASE_QUANTITY, id });
+  };
+
+  const decreaseQuantity = (id: string) => {
+    dispatch({ type: ACTION_TYPES.DECREASE_QUANTITY, id });
   };
   const handleOrderSubmission = (details: { name: string; email: string }) => {
     alert(`Order placed by ${details.name} (${details.email}) for $${total.toFixed(2)}`);
@@ -72,9 +79,19 @@ const CartDrawer: FC<ICartDrawerProps> = ({ isCartOpen, setIsCartOpen }) => {
                   primary={`${item.name} x${item.quantity}`}
                   secondary={`$${item.price * item.quantity}`}
                 />
-                <IconButton onClick={() => removeItem(item.id)} color='secondary'>
-                  <Close />
-                </IconButton>
+
+                <Box display='flex' alignItems='center'>
+                  <IconButton onClick={() => decreaseQuantity(item.id)}>
+                    <Remove color='secondary' />
+                  </IconButton>
+                  <Typography>{item.quantity}</Typography>
+                  <IconButton onClick={() => increaseQuantity(item.id)}>
+                    <Add color='secondary' />
+                  </IconButton>
+                  <IconButton onClick={() => removeItem(item.id)}>
+                    <Delete color='error' />
+                  </IconButton>
+                </Box>
               </ListItem>
             ))}
           </List>
